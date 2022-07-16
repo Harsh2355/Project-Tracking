@@ -8,39 +8,39 @@ import javax.persistence.Id;
 
 @Entity
 public class Tokens {
-	
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name="id")
-	private int id;
-	
-	@Column(name="token")
-	private String token;
-	
+    
+    @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    @Column(name="id")
+    private int id;
+    
+    @Column(name="token")
+    private String token;
+    
 //	@Column(name="user_id")
 //	private int userId;
-	
-	public Tokens() {}
-	
-	public Tokens(String token) {
-		this.token = token;
-	}
+    
+    public Tokens() {}
+    
+    public Tokens(String token) {
+        this.token = token;
+    }
 
-	public int getId() {
-		return id;
-	}
+    public int getId() {
+        return id;
+    }
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	public String getToken() {
-		return token;
-	}
+    public String getToken() {
+        return token;
+    }
 
-	public void setToken(String token) {
-		this.token = token;
-	}
+    public void setToken(String token) {
+        this.token = token;
+    }
 
 //	public int getUserId() {
 //		return userId;

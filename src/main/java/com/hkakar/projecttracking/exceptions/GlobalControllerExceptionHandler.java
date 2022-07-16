@@ -12,14 +12,14 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 public class GlobalControllerExceptionHandler {
 
-	@ExceptionHandler({ UserAlreadyExistsException.class, 
-						InternalServerErrorException.class })
-	public ResponseEntity<Object> userExistsException(UserAlreadyExistsException ex) {
-		Map<String, Object> body = new LinkedHashMap<>();
+    @ExceptionHandler({ UserAlreadyExistsException.class, 
+                        InternalServerErrorException.class })
+    public ResponseEntity<Object> userExistsException(UserAlreadyExistsException ex) {
+        Map<String, Object> body = new LinkedHashMap<>();
         body.put("timestamp", LocalDateTime.now());
         body.put("status", ex.getStatus());
         body.put("statusMessage", ex.getStatusMessage());
         body.put("message", ex.getMessage());
-		return new ResponseEntity<Object>(body, HttpStatus.BAD_REQUEST);
-	}
+        return new ResponseEntity<Object>(body, HttpStatus.BAD_REQUEST);
+    }
 }

@@ -8,20 +8,20 @@ import com.hkakar.projecttracking.repositories.UserDao;
 
 @Service
 public class UserServiceImpl implements UserService {
-	
-	private UserDao userDAO;
-	
-	@Autowired
-	public UserServiceImpl(UserDao theUserDao) {
-		this.userDAO = theUserDao;
-	}
-	
-	public UserServiceImpl() {}
+    
+    private UserDao userDAO;
+    
+    @Autowired
+    public UserServiceImpl(UserDao theUserDao) {
+        this.userDAO = theUserDao;
+    }
+    
+    public UserServiceImpl() {}
 
-	@Override
-	public String registerUser(User user) {
-		return userDAO.registerUser(user);
-		
-	}
+    @Override
+    public String registerUser(User user) {
+        return userDAO.registerUser(user);
+        
+    }
 
 }

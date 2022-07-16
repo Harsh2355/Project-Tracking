@@ -27,17 +27,17 @@ import com.hkakar.projecttracking.utils.responseToken;
 @RestController
 @RequestMapping("/api/user")
 public class HomeController {
-	
-	private UserService userService;
-	
-	@Autowired
-	public HomeController(UserService theUserService) {
-		this.userService = theUserService;
-	}
-	
-	@PostMapping("/register")
-	public ResponseEntity<responseToken> register(@RequestBody User user) {
-		String token = userService.registerUser(user);
-		return new ResponseEntity<responseToken>(new responseToken("Bearer", token), HttpStatus.CREATED);
-	}
+    
+    private UserService userService;
+    
+    @Autowired
+    public HomeController(UserService theUserService) {
+        this.userService = theUserService;
+    }
+    
+    @PostMapping("/register")
+    public ResponseEntity<responseToken> register(@RequestBody User user) {
+        String token = userService.registerUser(user);
+        return new ResponseEntity<responseToken>(new responseToken("Bearer", token), HttpStatus.CREATED);
+    }
 }
