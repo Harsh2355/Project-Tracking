@@ -1,8 +1,10 @@
 package com.hkakar.projecttracking.services;
 
 
+import java.util.Map;
+
 import com.hkakar.projecttracking.entities.User;
 
 public interface UserService {
-    public String registerUser(User user);
+    public Map<String, String> registerUser(User user);
 }

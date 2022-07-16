@@ -1,6 +1,7 @@
 package com.hkakar.projecttracking.controllers;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.EntityManager;
 
@@ -37,7 +38,9 @@ public class HomeController {
     
     @PostMapping("/register")
     public ResponseEntity<responseToken> register(@RequestBody User user) {
-        String token = userService.registerUser(user);
-        return new ResponseEntity<responseToken>(new responseToken("Bearer", token), HttpStatus.CREATED);
+        Map<String, String> tokens = userService.registerUser(user);
+        return new ResponseEntity<responseToken>(new responseToken("Bearer", 
+                                                                   tokens.get("accessToken"), 
+                                                                   tokens.get("refreshToken")), HttpStatus.CREATED);
     }
 }
