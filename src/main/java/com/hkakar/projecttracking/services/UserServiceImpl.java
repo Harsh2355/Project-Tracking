@@ -1,5 +1,7 @@
 package com.hkakar.projecttracking.services;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +21,7 @@ public class UserServiceImpl implements UserService {
     public UserServiceImpl() {}
 
     @Override
-    public String registerUser(User user) {
+    public Map<String, String> registerUser(User user) {
         return userDAO.registerUser(user);
         
     }

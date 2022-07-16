@@ -5,12 +5,15 @@ public class responseToken {
     
     private String accessToken;
     
+    private String refreshToken;
+    
     public responseToken() {}
 
-    public responseToken(String tokenType, String accessToken) {
+    public responseToken(String tokenType, String accessToken, String refreshToken) {
         super();
         this.tokenType = tokenType;
         this.accessToken = accessToken;
+        this.refreshToken = refreshToken;
     }
 
     public String getTokenType() {
@@ -28,4 +31,12 @@ public class responseToken {
     public void setAccessToken(String accessToken) {
         this.accessToken = accessToken;
     }
+
+	public String getRefreshToken() {
+		return refreshToken;
+	}
+
+	public void setRefreshToken(String refreshToken) {
+		this.refreshToken = refreshToken;
+	}
 }

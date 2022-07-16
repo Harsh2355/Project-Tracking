@@ -1,6 +1,8 @@
 package com.hkakar.projecttracking.repositories;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.EntityManager;
 
@@ -51,7 +53,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public String registerUser(User user) {
+    public Map<String, String> registerUser(User user) {
         Session session = entityManager.unwrap(Session.class);
         String user_email = this.getUserByEmail(user.getEmail());
         
@@ -62,14 +64,26 @@ public class UserDaoImpl implements UserDao {
         }
         
         JWT jwt = new JWT(secretKey);
-        String token = jwt.createJWT(String.valueOf(user.getId()), "api/user/register", 10);
         
-        Tokens newToken = new Tokens(token);
-        user.addToken(newToken);
+        // Access Token
+        // ttl -> 1 hour
+        String accesstoken = jwt.createJWT(String.valueOf(user.getId()), "api/user/register", 3600000);
+        
+        // Refresh Token
+        // ttl -> 30 days
+        String refreshtoken = jwt.createJWT(String.valueOf(user.getId()), "api/user/register", 1728000000);
+        
+        Tokens newAccessToken = new Tokens(accesstoken);
+        Tokens newRefreshToken = new Tokens(refreshtoken);
+        user.addToken(newAccessToken);
+        user.addToken(newRefreshToken);
         
         session.save(user);
         
-        return token;
+        Map<String, String> body = new LinkedHashMap<>();
+        body.put("refreshToken", refreshtoken);
+        body.put("accessToken", accesstoken);
+        return body;
     }
 
 }
