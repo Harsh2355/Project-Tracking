@@ -28,6 +28,7 @@ services:
       SPRING_JPA_SHOW-SQL: true
       SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.MySQL8Dialect
       SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL: true
+      JWTP_SECRETKEY: ">[)?&NGT}._c+Y?K67mQxyL4Tfk2S,8jh|3dqC&l-po=$$?x.BB:/!SXW+*1o?`NUA@)]Ybz%xevPvhj;pGI.Z8>xD?%06+gq]*6:1G[.`Xxbkf[*NsKDyaICVJ=?4)"
     networks:
       - host
     depends_on:
