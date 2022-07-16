@@ -45,8 +45,8 @@ public class UserDaoImpl implements UserDao {
 		}
 		catch (Exception ex) {
 			throw new InternalServerErrorException(HttpStatus.INTERNAL_SERVER_ERROR.value(), 
-					 HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(), 
-					 "Ran into trouble retrieving user details");
+					 							   HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(), 
+					 							   "Ran into trouble retrieving user details");
 		}
 	}
 
