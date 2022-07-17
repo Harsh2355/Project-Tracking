@@ -1,0 +1,8 @@
+models
+
+User
+    - username
+    - firstname
+    - lastname
+    - email
+    - mobile num
