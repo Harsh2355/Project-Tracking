@@ -9,7 +9,9 @@ import javax.persistence.EntityManager;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,12 +28,15 @@ public class UserDaoImpl implements UserDao {
     
     private EntityManager entityManager;
     
+    private RedisTemplate<String, Object> template;
+    
     @Value("${jwtp.secretKey}")
     private String secretKey;
     
     @Autowired
-    public UserDaoImpl(EntityManager entityManager) {
+    public UserDaoImpl(EntityManager entityManager, RedisTemplate<String, Object> template) {
         this.entityManager = entityManager;
+        this.template = template;
     }
 
     @Override
@@ -78,6 +83,10 @@ public class UserDaoImpl implements UserDao {
         user.addToken(newAccessToken);
         user.addToken(newRefreshToken);
         
+//        System.out.println(user.getId());
+//        System.out.println(user);
+//        template.opsForHash().put("User", (Integer) user.getId(), user);
+        
         session.save(user);
         
         Map<String, String> body = new LinkedHashMap<>();
@@ -85,5 +94,21 @@ public class UserDaoImpl implements UserDao {
         body.put("accessToken", accesstoken);
         return body;
     }
+
+	@Override
+	public User getUser(int userId) {
+////		User cachedUser = (User) template.opsForHash().get("User", userId);
+//		String cachedUser = (String) template.opsForHash().get("User", userId);
+//		if (cachedUser != null) {
+//			System.out.println(cachedUser);
+//		}
+		Session session = entityManager.unwrap(Session.class);
+//		Query query = session.createQuery("SELECT User from User U where U.id=user_id");
+//        query.setParameter("user_id", userId);
+//        List<Object> users = query.list();
+		System.out.println(userId);
+		User user = (User) session.get(User.class, userId);
+        return user;
+	}
 
 }

@@ -3,6 +3,7 @@ package com.hkakar.projecttracking.services;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.hkakar.projecttracking.entities.User;
@@ -25,5 +26,12 @@ public class UserServiceImpl implements UserService {
         return userDAO.registerUser(user);
         
     }
+
+	@Override
+	@Cacheable(value="User", key="#userId")
+	public User getUser(int userId) {
+		System.out.println("NOT CACHED");
+		return userDAO.getUser(userId);
+	}
 
 }

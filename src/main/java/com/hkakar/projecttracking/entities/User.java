@@ -1,19 +1,26 @@
 package com.hkakar.projecttracking.entities;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
+import org.springframework.data.redis.core.RedisHash;
+
 @Entity
-public class User {
+@RedisHash("User")
+public class User implements Serializable  {
+	
+	private static final long serialVersionUID = 3L;
     
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
@@ -38,7 +45,7 @@ public class User {
     @Column(name="mobile_num")
     private String mobileNum;
     
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name="user_id")
     private Set<Tokens> tokens = new HashSet<Tokens>();
     
