@@ -13,8 +13,8 @@ import org.springframework.data.redis.core.RedisHash;
 @Entity
 @RedisHash("Tokens")
 public class Tokens implements Serializable {
-	
-	private static final long serialVersionUID = 4L;
+    
+    private static final long serialVersionUID = 4L;
     
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)

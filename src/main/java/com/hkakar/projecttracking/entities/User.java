@@ -13,7 +13,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 
+import org.hibernate.validator.constraints.Length;
 import org.springframework.data.redis.core.RedisHash;
 
 @Entity
@@ -28,21 +32,30 @@ public class User implements Serializable  {
     private int id;
     
     @Column(name="username")
+    @NotEmpty
     private String username;
     
     @Column(name="password")
+    @Length(min=8, max=100)
+    @NotEmpty
     private String password;
     
     @Column(name="firstName")
+    @NotEmpty
     private String firstName;
     
     @Column(name="lastName")
     private String lastName;
     
     @Column(name="email")
+    @NotEmpty
+    @Email
     private String email;
     
     @Column(name="mobile_num")
+    @NotEmpty
+    @Length(min=10, max=10)
+    @Digits(fraction = 0, integer = 10)
     private String mobileNum;
     
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
