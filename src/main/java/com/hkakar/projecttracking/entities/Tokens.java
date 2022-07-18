@@ -1,13 +1,20 @@
 package com.hkakar.projecttracking.entities;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import org.springframework.data.redis.core.RedisHash;
+
 @Entity
-public class Tokens {
+@RedisHash("Tokens")
+public class Tokens implements Serializable {
+    
+    private static final long serialVersionUID = 4L;
     
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
