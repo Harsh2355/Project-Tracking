@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -60,9 +61,9 @@ public class HomeController {
                                                                    tokens.get("refreshToken")), HttpStatus.OK);
     }
     
-    @GetMapping("/tokens/{userId}")
-    public List<String> getUserTokens(@PathVariable String userId) {
-        return userService.getTokens(Integer.parseInt(userId));
+    @GetMapping("/tokens")
+    public List<String> getUserTokens(@RequestAttribute("user") User user) {
+        return userService.getTokens(user.getEmail());
     }
     
 }

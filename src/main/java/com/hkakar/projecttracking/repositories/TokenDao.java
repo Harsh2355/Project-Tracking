@@ -5,5 +5,5 @@ import java.util.List;
 import com.hkakar.projecttracking.entities.Tokens;
 
 public interface TokenDao {
-    public List<String> getTokens(int userId);
+    public List<String> getTokens(String email);
 }

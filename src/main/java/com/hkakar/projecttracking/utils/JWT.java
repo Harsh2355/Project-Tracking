@@ -1,11 +1,16 @@
 package com.hkakar.projecttracking.utils;
 
 import javax.crypto.spec.SecretKeySpec;
+import javax.persistence.EntityManager;
 import javax.xml.bind.DatatypeConverter;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.security.Key;
 
@@ -13,16 +18,16 @@ import io.jsonwebtoken.*;
 
 import java.util.Date;
 
-@Component
-public class JWT {	
+@Repository
+@Primary
+public class JWT {
     
+    private EntityManager entityManager;
+    
+    @Value("${jwtp.secretKey}")
     private String SECRET_KEY;
     
     public JWT() {}
-    
-    public JWT(String secretKey) {
-        this.SECRET_KEY = secretKey;
-    }
     
     public String createJWT(String id, String issuer, long ttl) {
         

@@ -9,9 +9,8 @@ import javax.persistence.EntityManager;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.context.annotation.Primary;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,11 +24,12 @@ import com.hkakar.projecttracking.utils.UpdatableBcrypt;
 
 @Repository
 @Transactional
+@Primary
 public class UserDaoImpl implements UserDao {
     
     private EntityManager entityManager;
     
-    private RedisTemplate<String, Object> template;
+    private JWT jwt;
     
     private UpdatableBcrypt bcrypt = new UpdatableBcrypt(11);
     
@@ -37,9 +37,9 @@ public class UserDaoImpl implements UserDao {
     private String secretKey;
     
     @Autowired
-    public UserDaoImpl(EntityManager entityManager, RedisTemplate<String, Object> template) {
+    public UserDaoImpl(EntityManager entityManager, JWT jwt) {
         this.entityManager = entityManager;
-        this.template = template;
+        this.jwt = jwt;
     }
 
     @Override
@@ -71,11 +71,9 @@ public class UserDaoImpl implements UserDao {
                                                  "User with the provided email already exists.");
         }
         
-        JWT jwt = new JWT(secretKey);
-        
         // Access Token
         // ttl -> 1 hour
-        String accesstoken = jwt.createJWT(String.valueOf(user.getId()), "api/user/register", 3600000);
+        String accesstoken = jwt.createJWT(String.valueOf(user.getId()), user.getEmail(), 3600000);
         
         // Refresh Token
         // ttl -> 30 days
@@ -125,7 +123,6 @@ public class UserDaoImpl implements UserDao {
         
         User user = this.getUserByEmail(email);
         if (bcrypt.verifyHash(password, user.getPassword())) {
-            JWT jwt = new JWT(secretKey);
             
             // Access Token
             // ttl -> 1 hour
